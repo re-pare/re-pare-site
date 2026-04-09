@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: re-pare/repare-site
+  repo: re-pare/re-pare-site
   branch: main
   auth_endpoint: api/auth
   
