@@ -1,8 +1,6 @@
 backend:
-  name: github
-  repo: re-pare/re-pare-site
+  name: git-gateway
   branch: main
-  auth_endpoint: api/auth
   
 media_folder: "images/uploads"
 public_folder: "/images/uploads"

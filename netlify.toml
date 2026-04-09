@@ -63,13 +63,4 @@ for = "/*.css"
 [[headers]]
 for = "/*"
 [headers.values]
-  Content-Security-Policy = """
-default-src 'self';
-script-src 'self' 'unsafe-inline' 'unsafe-eval' unpkg.com cdn.jsdelivr.net;
-style-src 'self' 'unsafe-inline' fonts.googleapis.com;
-font-src 'self' fonts.gstatic.com;
-img-src 'self' data: https:;
-media-src 'self' https:;
-connect-src 'self' https:;
-frame-ancestors 'none';
-"""
+  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://cdn.jsdelivr.net https://identity.netlify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self' https:; connect-src 'self' https:; frame-src 'self' https://identity.netlify.com; frame-ancestors 'none';"
