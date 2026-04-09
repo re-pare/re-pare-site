@@ -19,7 +19,7 @@
   --text:#111110;
   --text-muted:#7e7d76;
   --text-dim:#c0beb5;
-  --re:#c0ff47;
+  --re:#c0beb5;
   --font-display:"Syne",sans-serif;
   --font-mono:"JetBrains Mono",monospace;
 }
@@ -117,6 +117,7 @@ nav{
   transition:color .4s;z-index:0;
 }
 .hero-bg .acc{color:#c8ff47}
+
 .hero-title-wrap{
   display:flex;align-items:center;justify-content:center;
   padding:4rem 2rem 3rem;position:relative;z-index:1;
@@ -289,6 +290,7 @@ footer{
 
 /* ─── REVEALS ─── */
 .sr{opacity:0;transform:translateY(16px);transition:opacity .65s ease,transform .65s ease}
+.sr.in{opacity:1;transform:none}
 .cat-item{opacity:0;transform:translateY(10px);transition:opacity .45s ease,transform .45s ease,background .18s,border-color .4s}
 .cat-item.in{opacity:1;transform:none}
 .cat-item:nth-child(2){transition-delay:.06s}
@@ -419,7 +421,7 @@ footer{
   <div class="hero-bottom">
     <a href="repare-blog.html" class="hero-blog-cell">
       <div class="hero-blog-name"><span class="re">RE:</span>Blog</div>
-      <div class="hero-blog-desc">Guides, coulisses, analyses. Pour comprendre le reconditionnement en profondeur &mdash; les enjeux techniques, écologiques et économiques de chaque machine.</div>
+      <div class="hero-blog-desc">Guides, coulisses, analyses. Pour comprendre le reconditionnement en profondeur &mdash; les enjeux techniques, &eacute;cologiques et &eacute;conomiques de chaque machine.</div>
       <span class="hero-blog-arrow">&nearr;</span>
     </a>
     <div class="hero-divider"></div>
@@ -433,22 +435,22 @@ footer{
   <div class="categories">
     <a href="repare-catalogue.html?filter=lab" class="cat-item">
       <div class="cat-name"><span class="re">RE:</span>Lab</div>
-      <div class="cat-desc">PC Gaming reconditionnés. Testés, photographiés, benchmarkés. Disponibles sur les plateformes partenaires.</div>
+      <div class="cat-desc">PC Gaming reconditionnés. Test&eacute;s, photographi&eacute;s, benchmark&eacute;s. Disponibles sur les plateformes partenaires.</div>
       <span class="cat-arrow">&nearr;</span>
     </a>
     <a href="repare-custom.html" class="cat-item">
       <div class="cat-name"><span class="re">RE:</span>Custom</div>
-      <div class="cat-desc">Build sur mesure. Définis ton budget et tes besoins — on s’occupe du reste.</div>
+      <div class="cat-desc">Build sur mesure. D&eacute;finis ton budget et tes besoins &mdash; on s&rsquo;occupe du reste.</div>
       <span class="cat-arrow">&nearr;</span>
     </a>
     <a href="repare-catalogue.html?filter=keyboard" class="cat-item">
       <div class="cat-name"><span class="re">RE:</span>Keyboard</div>
-      <div class="cat-desc">Claviers mécaniques reconditionnés et customs. Tactile, son, esthétique — documentés.</div>
+      <div class="cat-desc">Claviers m&eacute;caniques reconditionnés et customs. Tactile, son, esth&eacute;tique &mdash; document&eacute;s.</div>
       <span class="cat-arrow">&nearr;</span>
     </a>
     <a href="repare-catalogue.html?filter=new" class="cat-item">
       <div class="cat-name"><span class="re">RE:</span>New</div>
-      <div class="cat-desc">PC neufs assemblés avec soin. Les mêmes exigences, un matériel de première main.</div>
+      <div class="cat-desc">PC neufs assembl&eacute;s avec soin. Les m&ecirc;mes exigences, un mat&eacute;riel de premi&egrave;re main.</div>
       <span class="cat-arrow">&nearr;</span>
     </a>
   </div>
@@ -457,17 +459,17 @@ footer{
 <section class="about" id="s-about">
   <div class="about-left sr">
     <div>
-      <div class="section-eyebrow">À propos</div>
+      <div class="section-eyebrow">&Agrave; propos</div>
       <h2 class="about-heading">Faire mieux<br>avec moins.<br>En France.</h2>
-      <p class="about-body">RE:PARE est né d’une conviction : la technologie de qualité ne devrait pas finir à la décharge. Chaque machine reconditionnée, c’est une réponse concrète aux enjeux écologiques, économiques et techniques d’une industrie qui consomme trop.<br><br>Basée en France, la démarche RE:PARE valorise le savoir-faire local, la transparence totale et l’exigence du travail bien fait — avec peu, mais bien.</p>
+      <p class="about-body">RE:PARE est n&eacute; d&rsquo;une conviction&nbsp;: la technologie de qualit&eacute; ne devrait pas finir &agrave; la d&eacute;charge. Chaque machine reconditionnée, c&rsquo;est une r&eacute;ponse concr&egrave;te aux enjeux &eacute;cologiques, &eacute;conomiques et techniques d&rsquo;une industrie qui consomme trop.<br><br>Bas&eacute;e en France, la d&eacute;marche RE:PARE valorise le savoir-faire local, la transparence totale et l&rsquo;exigence du travail bien fait &mdash; avec peu, mais bien.</p>
     </div>
     <a href="repare-about.html" class="about-link">En savoir plus &rarr;</a>
   </div>
   <div class="about-right sr">
-    <div class="value-row"><span class="value-dash">—</span><div><div class="value-title">Écologie</div><div class="value-body">Prolonger la durée de vie du matériel existant plutôt que produire du neuf.</div></div></div>
-    <div class="value-row"><span class="value-dash">—</span><div><div class="value-title">Accessibilité</div><div class="value-body">Du hardware haute performance à des prix qui respectent l’acheteur.</div></div></div>
-    <div class="value-row"><span class="value-dash">—</span><div><div class="value-title">Transparence</div><div class="value-body">Documentation complète de chaque machine. Rien de caché, tout de montré.</div></div></div>
-    <div class="value-row"><span class="value-dash">—</span><div><div class="value-title">Fait en France</div><div class="value-body">Chaque machine préparée localement, avec fierté et rigueur.</div></div></div>
+    <div class="value-row"><span class="value-dash">&mdash;</span><div><div class="value-title">&Eacute;cologie</div><div class="value-body">Prolonger la dur&eacute;e de vie du mat&eacute;riel existant plut&ocirc;t que produire du neuf.</div></div></div>
+    <div class="value-row"><span class="value-dash">&mdash;</span><div><div class="value-title">Accessibilit&eacute;</div><div class="value-body">Du hardware haute performance &agrave; des prix qui respectent l&rsquo;acheteur.</div></div></div>
+    <div class="value-row"><span class="value-dash">&mdash;</span><div><div class="value-title">Transparence</div><div class="value-body">Documentation compl&egrave;te de chaque machine. Rien de cach&eacute;, tout de montr&eacute;.</div></div></div>
+    <div class="value-row"><span class="value-dash">&mdash;</span><div><div class="value-title">Fait en France</div><div class="value-body">Chaque machine pr&eacute;par&eacute;e localement, avec fiert&eacute; et rigueur.</div></div></div>
   </div>
 </section>
 
@@ -480,7 +482,7 @@ footer{
     <a href="https://www.etsy.com/shop/VOTRE-BOUTIQUE" target="_blank" rel="noopener" class="plat-link">Etsy</a>
     <a href="https://www.depop.com/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">Depop</a>
     <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=VOTRE-ID" target="_blank" rel="noopener" class="plat-link">Kleinanzeigen</a>
-    <a href="https://www.2ememain.be/verkopers/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">2ème Main</a>
+    <a href="https://www.2ememain.be/verkopers/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">2&egrave;me Main</a>
   </div>
 </div>
 
@@ -488,12 +490,12 @@ footer{
   <span class="footer-logo">re:pare</span>
   <ul class="footer-nav">
     <li><a href="repare-blog.html">Blog</a></li>
-    <li><a href="repare-about.html">À propos</a></li>
+    <li><a href="repare-about.html">&Agrave; propos</a></li>
     <li><a href="repare-contact.html">Aide</a></li>
     <li><a href="repare-mentions.html">Mentions légales</a></li>
     <li><a href="repare-contact.html">Contact</a></li>
   </ul>
-  <span class="footer-copy">© 2025 RE:PARE — Mulhouse, France</span>
+  <span class="footer-copy">&copy; 2025 RE:PARE &mdash; Mulhouse, France</span>
 </footer>
 
 <script>
