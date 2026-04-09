@@ -21,7 +21,7 @@
   --text:#e0e0d6;--text-muted:#56564f;--text-dim:#2a2a27;
 }
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--font-mono);font-weight:300;overflow-x:hidden;transition:background .4s,color .4s}
+body{min-height:100vh;display:flex;flex-direction:column;background:var(--bg);color:var(--text);font-family:var(--font-mono);font-weight:300;overflow-x:hidden;transition:background .4s,color .4s}
 ::selection{background:var(--text);color:var(--bg)}
 body::after{content:"";position:fixed;inset:-100%;width:300%;height:300%;background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='200' height='200' filter='url(%23g)'/></svg>");opacity:.03;pointer-events:none;z-index:9999;animation:grain 12s steps(8) infinite}
 @keyframes grain{0%,100%{transform:translate(0,0)}10%{transform:translate(-1%,-2%)}20%{transform:translate(2%,1%)}30%{transform:translate(-1%,2%)}40%{transform:translate(1%,-1%)}50%{transform:translate(-2%,1%)}60%{transform:translate(1%,2%)}70%{transform:translate(-1%,-1%)}80%{transform:translate(2%,-2%)}90%{transform:translate(-2%,2%)}}
@@ -48,7 +48,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:grid;grid-template-c
 [data-theme="dark"] .nav-cta{background:#c8ff47;color:#0d0d0b}
 .nav-cta:hover{opacity:.7}
 
-main{padding-top:54px}
+main{padding-top:54px;flex:1;display:flex;flex-direction:column}
 
 /* BREADCRUMB */
 .breadcrumb{padding:.9rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem;font-size:9px;letter-spacing:.1em;color:var(--text-dim);background:var(--bg);position:relative;z-index:2;transition:border-color .4s,color .4s,background .4s}
@@ -60,8 +60,12 @@ main{padding-top:54px}
 /* CATALOGUE CONTAINER */
 .page-container{
   max-width:1100px;
+  width:100%;
   margin:0 auto;
   position:relative;
+  display:flex;
+  flex-direction:column;
+  flex:1;
 }
 .page-container .breadcrumb{border-left:1px solid var(--border);border-right:1px solid var(--border);transition:border-color .4s}
 
@@ -153,6 +157,39 @@ main{padding-top:54px}
   border:1px solid var(--border);
   border-top:none;
   transition:border-color .4s;
+  flex:1;
+  align-content:start;
+  min-height:clamp(360px,48vh,620px);
+}
+
+.products-grid.is-empty{
+  grid-template-columns:1fr;
+}
+
+.empty-state{
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:.85rem;
+  padding:2rem;
+  text-align:center;
+  background:var(--bg-2);
+}
+
+.empty-state-title{
+  font-family:var(--font-display);
+  font-size:clamp(22px,2.4vw,32px);
+  font-weight:800;
+  letter-spacing:-.8px;
+}
+
+.empty-state-copy{
+  font-size:10.5px;
+  line-height:1.8;
+  color:var(--text-muted);
+  max-width:460px;
 }
 
 .product-card{
@@ -392,9 +429,9 @@ footer{
   .nav-cta{padding:7px 10px;font-size:8.5px}
   .tgl-label{display:none}
   .catalogue-header{padding:1.5rem 1.25rem}
-  .products-grid{grid-template-columns:1fr}
+  .products-grid{grid-template-columns:1fr;min-height:280px}
   .product-card:nth-child(3n){border-right:1px solid var(--border)}
-  .product-card:nth-child(any-link){border-right:none}
+  .product-card{border-right:none}
   .product-image{aspect-ratio:auto;min-height:200px}
   footer{grid-template-columns:1fr;gap:1rem;padding:1.5rem 1.25rem;text-align:center}
   .footer-nav{flex-wrap:wrap;justify-content:center;gap:1rem}
@@ -412,7 +449,8 @@ footer{
   <a href="index.html" class="nav-logo">re<span class="acc">:</span>pare</a>
   <ul class="nav-center">
     <li><a href="repare-catalogue.html?filter=lab">RE:Lab</a></li>
-    <li><a href="repare-catalogue.html?filter=custom">RE:Custom</a></li>
+    <li><a href="repare-custom.html">RE:Custom</a></li>
+    <li><a href="repare-catalogue.html?filter=laptop">RE:Laptop</a></li>
     <li><a href="repare-catalogue.html?filter=keyboard">RE:Keyboard</a></li>
     <li><a href="repare-catalogue.html?filter=new">RE:New</a></li>
   </ul>
@@ -438,6 +476,7 @@ footer{
     <div class="filter-bar">
       <a href="repare-catalogue.html" class="filter-btn" id="filter-all">Tous les produits</a>
       <a href="repare-catalogue.html?filter=lab" class="filter-btn" id="filter-lab">RE:Lab</a>
+      <a href="repare-catalogue.html?filter=laptop" class="filter-btn" id="filter-laptop">RE:Laptop</a>
       <a href="repare-catalogue.html?filter=keyboard" class="filter-btn" id="filter-keyboard">RE:Keyboard</a>
       <a href="repare-catalogue.html?filter=new" class="filter-btn" id="filter-new">RE:New</a>
     </div>
@@ -451,13 +490,13 @@ footer{
 <div class="platforms">
   <span class="plat-label">Disponible sur</span>
   <div class="plat-list">
-    <a href="https://www.ebay.fr/usr/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">eBay</a>
-    <a href="https://www.leboncoin.fr/profil/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">Le Bon Coin</a>
-    <a href="https://www.vinted.fr/member/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">Vinted</a>
-    <a href="https://www.etsy.com/shop/VOTRE-BOUTIQUE" target="_blank" rel="noopener" class="plat-link">Etsy</a>
-    <a href="https://www.depop.com/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">Depop</a>
-    <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=VOTRE-ID" target="_blank" rel="noopener" class="plat-link">Kleinanzeigen</a>
-    <a href="https://www.2ememain.be/verkopers/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">2ème Main</a>
+    <a href="https://www.ebay.fr/usr/repare" target="_blank" rel="noopener" class="plat-link">eBay</a>
+    <a href="https://www.leboncoin.fr/profil/14ef88b7-7da1-450c-a376-38149525efe4/offres" target="_blank" rel="noopener" class="plat-link">Le Bon Coin</a>
+    <a href="https://www.vinted.fr/member/16148067-repare" target="_blank" rel="noopener" class="plat-link">Vinted</a>
+    <a href="https://www.etsy.com/fr/people/j3swd6ul5vu60qun?ref=hdr_user_menu-profile" target="_blank" rel="noopener" class="plat-link">Etsy</a>
+    <a href="https://www.depop.com/repare/" target="_blank" rel="noopener" class="plat-link">Depop</a>
+    <a href="https://www.kleinanzeigen.de/portal/anzeigen?tab=PROJECTS" target="_blank" rel="noopener" class="plat-link">Kleinanzeigen</a>
+    <a href="#" onclick="return false;" aria-disabled="true" class="plat-link">2ème Main — bientôt</a>
   </div>
 </div>
 
@@ -595,6 +634,11 @@ function updateCatalogue(){
     title.textContent="RE:Keyboard — Claviers Mécaniques";
     breadcrumb.textContent="RE:Keyboard";
     productsToShow=dataLoader.getProductsByCategory("keyboard");
+  }else if(filter==="laptop"){
+    document.getElementById("filter-laptop").classList.add("active");
+    title.textContent="RE:Laptop — Portables Reconditionnés";
+    breadcrumb.textContent="RE:Laptop";
+    productsToShow=dataLoader.getProductsByCategory("laptop");
   }else if(filter==="new"){
     document.getElementById("filter-new").classList.add("active");
     title.textContent="RE:New — Neufs";
@@ -611,9 +655,38 @@ function updateCatalogue(){
   
   // Clear and populate grid
   grid.innerHTML="";
+  grid.classList.toggle("is-empty", productsToShow.length===0);
+
+  if(productsToShow.length===0){
+    grid.innerHTML=`
+      <div class="empty-state">
+        <div class="empty-state-title">Catalogue en préparation</div>
+        <p class="empty-state-copy">Il n’y a pas encore de machine publiée dans cette section. Les prochaines annonces arrivent bientôt.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const templateByCategory = {
+    lab: "repare-product.html",
+    product: "repare-product.html",
+    new: "repare-new.html",
+    keyboard: "repare-keyboard.html",
+    laptop: "repare-laptop.html"
+  };
+
+  const categoryLabelMap = {
+    lab: "RE:Lab",
+    product: "RE:Lab",
+    new: "RE:New",
+    keyboard: "RE:Keyboard",
+    laptop: "RE:Laptop"
+  };
+
   productsToShow.forEach(product=>{
     const card=document.createElement("a");
-    card.href=`repare-product.html?slug=${product.slug}`;
+    const template = templateByCategory[product.category] || "repare-product.html";
+    card.href=`${template}?slug=${product.slug}`;
     card.className="product-card";
     
     const image=product.images && product.images.length>0 
@@ -623,7 +696,7 @@ function updateCatalogue(){
     card.innerHTML=`
       <div class="product-image">${image}</div>
       <div class="product-info">
-        <div class="product-tag">${(product.category || 'product').toUpperCase()}</div>
+        <div class="product-tag">${categoryLabelMap[product.category] || "RE:Product"}</div>
         <div class="product-name">${product.title}</div>
         <div class="product-desc">${product.status || 'À vendre'}</div>
       </div>

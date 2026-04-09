@@ -8,6 +8,7 @@ class DataLoader {
     this.blogPosts = [];
     this.products = {
       lab: [],
+      laptop: [],
       keyboard: [],
       new: [],
       product: [],
