@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RE:PARE — Mentions l&eacute;gales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f8f7f3;--bg-2:#efede7;--bg-3:#e8e6df;
+  --border:#dddbd3;--border-mid:#c4c2b8;
+  --text:#111110;--text-muted:#7e7d76;--text-dim:#c0beb5;
+  --col:760px;--panel:rgba(248,247,243,0.94);
+  --font-display:"Syne",sans-serif;
+  --font-serif:"DM Serif Display",serif;
+  --font-mono:"JetBrains Mono",monospace;
+}
+[data-theme="dark"]{
+  --bg:#0d0d0b;--bg-2:#151513;--bg-3:#1b1b18;
+  --border:#222220;--border-mid:#363632;
+  --text:#e0e0d6;--text-muted:#56564f;--text-dim:#2a2a27;
+  --panel:rgba(13,13,11,0.94);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-mono);font-weight:300;overflow-x:hidden;transition:background .4s,color .4s}
+::selection{background:var(--text);color:var(--bg)}
+body::after{content:"";position:fixed;inset:-100%;width:300%;height:300%;background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='200' height='200' filter='url(%23g)'/></svg>");opacity:.03;pointer-events:none;z-index:9999;animation:grain 12s steps(8) infinite}
+@keyframes grain{0%,100%{transform:translate(0,0)}10%{transform:translate(-1%,-2%)}20%{transform:translate(2%,1%)}30%{transform:translate(-1%,2%)}40%{transform:translate(1%,-1%)}50%{transform:translate(-2%,1%)}60%{transform:translate(1%,2%)}70%{transform:translate(-1%,-1%)}80%{transform:translate(2%,-2%)}90%{transform:translate(-2%,2%)}}
+#bg-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+nav,main,footer{position:relative;z-index:1}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 2rem;height:54px;border-bottom:1px solid var(--border);background:var(--bg);transition:background .4s,border-color .4s}
+.nav-logo{font-family:var(--font-display);font-size:26px;font-weight:800;letter-spacing:-1px;color:var(--text);text-decoration:none;transition:color .4s;line-height:1}
+.nav-logo .acc{color:#c8ff47}
+.nav-center{display:flex;list-style:none;justify-content:center}
+.nav-center a{font-size:9.5px;letter-spacing:.1em;color:var(--text-muted);text-decoration:none;padding:5px 14px;border-right:1px solid var(--border);transition:color .15s,border-color .4s;white-space:nowrap}
+.nav-center li:first-child a{border-left:1px solid var(--border)}
+.nav-center a:hover{color:var(--text)}
+[data-theme="dark"] .nav-center a:hover{color:#c8ff47}
+.nav-right{display:flex;align-items:center;gap:1.25rem;justify-content:flex-end}
+.theme-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;flex-shrink:0}
+.tgl-label{font-size:9px;letter-spacing:.14em;color:var(--text-muted);text-transform:uppercase;transition:color .4s;min-width:26px;text-align:right}
+.tgl-track{width:34px;height:18px;background:var(--bg-3);border:1px solid var(--border-mid);border-radius:9px;position:relative;transition:background .4s,border-color .4s;flex-shrink:0}
+[data-theme="dark"] .tgl-track{background:#c8ff47;border-color:#c8ff47}
+.tgl-thumb{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:var(--text-muted);transition:transform .25s cubic-bezier(.4,0,.2,1),background .4s}
+[data-theme="dark"] .tgl-thumb{transform:translateX(16px);background:#0d0d0b}
+.nav-cta{font-family:var(--font-mono);font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--bg);background:var(--text);text-decoration:none;padding:8px 16px;transition:opacity .15s,background .4s,color .4s;white-space:nowrap;flex-shrink:0}
+[data-theme="dark"] .nav-cta{background:#c8ff47;color:#0d0d0b}
+.nav-cta:hover{opacity:.7}
+main{padding-top:54px}
+.panel{max-width:var(--col);margin:0 auto;background:var(--panel);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-left:1px solid var(--border);border-right:1px solid var(--border);transition:background .4s,border-color .4s;min-height:calc(100vh - 54px)}
+.p-inner{padding:3.5rem 3.5rem}
+.page-eyebrow{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2rem;transition:color .4s}
+.page-title{font-family:var(--font-display);font-size:clamp(32px,5vw,56px);font-weight:800;line-height:.95;letter-spacing:-2px;margin-bottom:2.5rem}
+.section-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1rem;transition:color .4s}
+footer{display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:1.4rem 2rem;gap:2.5rem;border-top:1px solid var(--border);transition:border-color .4s}
+.footer-logo{font-family:var(--font-display);font-size:13px;font-weight:800;letter-spacing:-.2px;color:var(--text-muted);transition:color .4s}
+.footer-nav{display:flex;align-items:center;gap:1.75rem;list-style:none}
+.footer-nav a{font-size:8.5px;color:var(--text-dim);text-decoration:none;letter-spacing:.12em;text-transform:uppercase;transition:color .15s}
+.footer-nav a:hover{color:var(--text)}
+[data-theme="dark"] .footer-nav a:hover{color:#c8ff47}
+.footer-copy{font-size:8.5px;color:var(--text-dim);letter-spacing:.06em;text-align:right;transition:color .4s;white-space:nowrap}
+@media(max-width:860px){.nav-center{display:none}nav{grid-template-columns:1fr auto}}
+@media(max-width:600px){nav{padding:0 1.25rem;height:50px}.nav-logo{font-size:20px}.nav-cta{padding:7px 10px;font-size:8.5px}.p-inner{padding:2.5rem 1.5rem}footer{grid-template-columns:1fr;gap:1rem;padding:1.5rem 1.25rem;text-align:center}.footer-nav{flex-wrap:wrap;justify-content:center;gap:1rem}.footer-copy{text-align:center}}
+
+/* ─── BREADCRUMB ─── */
+.breadcrumb-bar{max-width:var(--col);margin:0 auto;width:100%;background:var(--bg);border-bottom:1px solid var(--border);border-left:1px solid var(--border);border-right:1px solid var(--border);position:relative;z-index:2;transition:background .4s,border-color .4s}
+.breadcrumb-inner{padding:.65rem 3.5rem;display:flex;align-items:center;gap:.55rem;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.1em;color:var(--text-dim);transition:color .4s}
+.breadcrumb-inner a{color:var(--text-dim);text-decoration:none;transition:color .15s}
+.breadcrumb-inner a:hover{color:var(--text)}
+[data-theme="dark"] .breadcrumb-inner a:hover{color:#c8ff47}
+.breadcrumb-sep{color:var(--border-mid);transition:color .4s}
+.breadcrumb-cur{color:var(--text-muted);transition:color .4s}
+
+.prose{font-size:12.5px;font-weight:300;line-height:1.95;letter-spacing:.015em;color:var(--text-muted);transition:color .4s}
+.prose p{margin-bottom:1.2em}
+.prose h2{font-family:var(--font-display);font-size:14px;font-weight:800;letter-spacing:-.2px;color:var(--text);margin:2.5em 0 .6em}
+.prose a{color:var(--text);text-underline-offset:3px}
+.prose a:hover{color:var(--text-muted)}
+.divider{border:none;border-top:1px solid var(--border);margin:2.5rem 0;transition:border-color .4s}
+.platform-list{display:flex;flex-wrap:wrap;gap:.6rem;margin:.75rem 0 1.5rem}
+.plat-tag{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);border:1px solid var(--border);padding:4px 10px;transition:border-color .18s,color .18s;text-decoration:none;display:inline-block}
+.plat-tag:hover{color:var(--text);border-color:var(--text)}
+[data-theme="dark"] .plat-tag:hover{color:#c8ff47;border-color:#c8ff47}
+
+/* ─── PLATFORMS BAR ─── */
+.platforms{padding:1.1rem 2rem;display:flex;align-items:center;gap:2.5rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg-2);transition:border-color .4s,background .4s;position:relative;z-index:1}
+.plat-label{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);white-space:nowrap;flex-shrink:0;transition:color .4s}
+.plat-list{display:flex;align-items:center;gap:1.75rem;flex-wrap:wrap}
+.plat-link{font-size:9.5px;color:var(--text-dim);letter-spacing:.06em;text-decoration:none;transition:color .18s;border-bottom:1px solid transparent;padding-bottom:1px}
+.plat-link:hover{color:var(--text);border-bottom-color:var(--border-mid)}
+[data-theme="dark"] .plat-link:hover{color:#c8ff47;border-bottom-color:#c8ff47}
+@media(max-width:600px){.platforms{flex-wrap:wrap;gap:1rem;padding:1rem 1.25rem}}
+
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<nav>
+  <a href="repare-landing.html" class="nav-logo">re<span class="acc">:</span>pare</a>
+  <ul class="nav-center">
+    <li><a href="repare-product.html">RE:Lab</a></li>
+    <li><a href="repare-custom.html">RE:Custom</a></li>
+    <li><a href="repare-keyboard.html">RE:Keyboard</a></li>
+    <li><a href="repare-blog.html">RE:New</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <span class="tgl-label" id="tgl-lbl">Nuit</span>
+      <div class="tgl-track"><div class="tgl-thumb"></div></div>
+    </div>
+    <a href="repare-landing.html#s-lab" class="nav-cta">Voir les machines &rarr;</a>
+  </div>
+</nav>
+<main>
+<div class="breadcrumb-bar">
+  <div class="breadcrumb-inner">
+    <a href="repare-landing.html">Accueil</a>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-cur">Mentions l&eacute;gales</span>
+  </div>
+</div>
+<div class="panel"><div class="p-inner">
+  <div class="page-eyebrow">Informations l&eacute;gales</div>
+  <h1 class="page-title">Mentions<br>l&eacute;gales</h1>
+  <div class="prose">
+    <h2>Éditeur du site</h2>
+    <p>Le site RE:PARE est &eacute;dit&eacute; par [Nom / Raison sociale &agrave; compl&eacute;ter], auto-entrepreneur / micro-entreprise immatricul&eacute;(e) au RCS de Mulhouse sous le num&eacute;ro [SIRET &agrave; compl&eacute;ter].</p>
+    <p><strong>Adresse&nbsp;:</strong> Mulhouse, Grand Est, France<br>
+    <strong>Email&nbsp;:</strong> <a href="/cdn-cgi/l/email-protection#adcec2c3d9ccced9eddfc8ddccdfc883cbdf"><span class="__cf_email__" data-cfemail="e3808c8d97828097a3918693829186cd8591">[email&#160;protected]</span></a><br>
+    <strong>Directeur de publication&nbsp;:</strong> [Pr&eacute;nom Nom]</p>
+
+    <hr class="divider">
+
+    <h2>H&eacute;bergement</h2>
+    <p>Ce site est h&eacute;berg&eacute; par Netlify, Inc. — 512 2nd Street, Suite 200, San Francisco, CA 94107, États-Unis. <a href="https://www.netlify.com" target="_blank" rel="noopener">netlify.com</a></p>
+
+    <hr class="divider">
+
+    <h2>Mod&egrave;le de distribution</h2>
+    <p>RE:PARE est un portail vitrine. Les articles pr&eacute;sent&eacute;s sur ce site sont mis en vente exclusivement via des plateformes tierces ind&eacute;pendantes. RE:PARE n&rsquo;est aucunement affili&eacute; &agrave; ces plateformes et n&rsquo;entretient avec elles aucun partenariat commercial&nbsp;; leur mention sur ce site est purement informative.</p>
+    <p>Plateformes sur lesquelles les annonces RE:PARE peuvent &ecirc;tre publi&eacute;es&nbsp;:</p>
+    <div class="platform-list">
+      <a href="https://www.ebay.fr/usr/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-tag">eBay</a>
+      <a href="https://www.leboncoin.fr/profil/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-tag">Le Bon Coin</a>
+      <a href="https://www.vinted.fr/member/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-tag">Vinted</a>
+      <a href="https://www.etsy.com/shop/VOTRE-BOUTIQUE" target="_blank" rel="noopener" class="plat-tag">Etsy</a>
+      <a href="https://www.depop.com/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-tag">Depop</a>
+      <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=VOTRE-ID" target="_blank" rel="noopener" class="plat-tag">Kleinanzeigen</a>
+      <a href="https://www.2ememain.be/verkopers/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-tag">2&egrave;me Main</a>
+    </div>
+    <p>Les transactions, conditions de vente, garanties l&eacute;gales et litiges &eacute;ventuels rel&egrave;vent exclusivement des conditions g&eacute;n&eacute;rales de chaque plateforme et de la l&eacute;gislation fran&ccedil;aise applicable.</p>
+
+    <hr class="divider">
+
+    <h2>Propri&eacute;t&eacute; intellectuelle</h2>
+    <p>L&rsquo;ensemble des contenus de ce site (textes, photographies, vid&eacute;os, benchmarks, visuels) est la propri&eacute;t&eacute; exclusive de RE:PARE, sauf mention contraire. Toute reproduction, m&ecirc;me partielle, est interdite sans autorisation &eacute;crite pr&eacute;alable.</p>
+
+    <hr class="divider">
+
+    <h2>Donn&eacute;es personnelles</h2>
+    <p>Ce site ne collecte aucune donn&eacute;e personnelle &agrave; des fins commerciales. Les &eacute;ventuelles questions ou demandes soumises via les formulaires de contact sont utilis&eacute;es uniquement pour r&eacute;pondre &agrave; la demande de l&rsquo;utilisateur. Aucun email n&rsquo;est transmis &agrave; des tiers.</p>
+    <p>Conform&eacute;ment au R&egrave;glement G&eacute;n&eacute;ral sur la Protection des Donn&eacute;es (RGPD), vous disposez d&rsquo;un droit d&rsquo;acc&egrave;s, de rectification et de suppression de vos donn&eacute;es en contactant&nbsp;: <a href="/cdn-cgi/l/email-protection#ceada1a0baafadba8ebcabbeafbcabe0a8bc"><span class="__cf_email__" data-cfemail="34575b5a40555740744651445546511a5246">[email&#160;protected]</span></a></p>
+
+    <hr class="divider">
+
+    <h2>Cookies</h2>
+    <p>Ce site n&rsquo;utilise pas de cookies de tra&ccedil;age ou publicitaires. Seules des pr&eacute;f&eacute;rences locales (th&egrave;me jour/nuit) peuvent &ecirc;tre enregistr&eacute;es dans le navigateur.</p>
+
+    <hr class="divider">
+    <p style="font-size:10px;color:var(--text-dim)">Derni&egrave;re mise &agrave; jour&nbsp;: janvier 2025</p>
+  </div>
+</div></div>
+</main>
+<div class="platforms">
+  <span class="plat-label">Disponible sur</span>
+  <div class="plat-list">
+    <a href="https://www.ebay.fr/usr/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">eBay</a>
+    <a href="https://www.leboncoin.fr/profil/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">Le Bon Coin</a>
+    <a href="https://www.vinted.fr/member/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">Vinted</a>
+    <a href="https://www.etsy.com/shop/VOTRE-BOUTIQUE" target="_blank" rel="noopener" class="plat-link">Etsy</a>
+    <a href="https://www.depop.com/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">Depop</a>
+    <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=VOTRE-ID" target="_blank" rel="noopener" class="plat-link">Kleinanzeigen</a>
+    <a href="https://www.2ememain.be/verkopers/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">2ème Main</a>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-logo">re:pare</span>
+  <ul class="footer-nav">
+    <li><a href="repare-blog.html">Blog</a></li>
+    <li><a href="repare-about.html">&Agrave; propos</a></li>
+    <li><a href="repare-contact.html">Aide</a></li>
+    <li><a href="repare-mentions.html">Mentions l&eacute;gales</a></li>
+    <li><a href="repare-contact.html">Contact</a></li>
+  </ul>
+  <span class="footer-copy">&copy; 2025 RE:PARE &mdash; Mulhouse, France</span>
+</footer>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function isDark(){return document.documentElement.getAttribute("data-theme")==="dark"}
+const canvas=document.getElementById("bg-canvas");
+const ctx=canvas.getContext("2d");
+let rects=[],raf;
+function initRects(){rects=[];const w=canvas.width,h=canvas.height;for(let i=0;i<28;i++){const s=30+Math.random()*140;rects.push({x:Math.random()*w,y:Math.random()*h,w:s,h:s*(0.35+Math.random()*0.85),vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.15,a:0.05+Math.random()*0.1,rot:Math.random()*Math.PI*2,vr:(Math.random()-.5)*.003})}}
+function drawBg(){const w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);const dark=isDark();rects.forEach(r=>{ctx.save();ctx.translate(r.x,r.y);ctx.rotate(r.rot);ctx.globalAlpha=dark?r.a*2.4:r.a*3.2;ctx.strokeStyle=dark?"#c8ff47":"#4a4a45";ctx.lineWidth=dark?.8:1;ctx.strokeRect(-r.w/2,-r.h/2,r.w,r.h);ctx.restore();r.x+=r.vx;r.y+=r.vy;r.rot+=r.vr;if(r.x<-160)r.x=w+100;if(r.x>w+160)r.x=-100;if(r.y<-160)r.y=h+100;if(r.y>h+160)r.y=-100});raf=requestAnimationFrame(drawBg)}
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;initRects()}
+function setTheme(theme){
+  const html=document.documentElement;
+  html.setAttribute("data-theme",theme);
+  const label=document.getElementById("tgl-lbl");
+  if(label) label.textContent = theme==="dark" ? "Jour" : "Nuit";
+  localStorage.setItem("repareTheme", theme);
+}
+
+function initTheme(){
+  const savedTheme = localStorage.getItem("repareTheme");
+  setTheme(savedTheme || "dark");
+}
+
+function toggleTheme(){
+  const html=document.documentElement;
+  const dark=html.getAttribute("data-theme")==="dark";
+  setTheme(dark?"light":"dark");
+}
+
+if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", initTheme);
+} else {
+  initTheme();
+}
+
+resizeCanvas();drawBg();
+window.addEventListener("resize",()=>{cancelAnimationFrame(raf);resizeCanvas();drawBg()});
+</script><script>
+function isDark(){return document.documentElement.getAttribute("data-theme")==="dark"}
+const canvas=document.getElementById("bg-canvas");
+const ctx=canvas.getContext("2d");
+let rects=[],raf;
+function initRects(){rects=[];const w=canvas.width,h=canvas.height;for(let i=0;i<28;i++){const s=30+Math.random()*140;rects.push({x:Math.random()*w,y:Math.random()*h,w:s,h:s*(0.35+Math.random()*0.85),vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.15,a:0.05+Math.random()*0.1,rot:Math.random()*Math.PI*2,vr:(Math.random()-.5)*.003})}}
+function drawBg(){const w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);const dark=isDark();rects.forEach(r=>{ctx.save();ctx.translate(r.x,r.y);ctx.rotate(r.rot);ctx.globalAlpha=dark?r.a*2.4:r.a*3.2;ctx.strokeStyle=dark?"#c8ff47":"#4a4a45";ctx.lineWidth=dark?.8:1;ctx.strokeRect(-r.w/2,-r.h/2,r.w,r.h);ctx.restore();r.x+=r.vx;r.y+=r.vy;r.rot+=r.vr;if(r.x<-160)r.x=w+100;if(r.x>w+160)r.x=-100;if(r.y<-160)r.y=h+100;if(r.y>h+160)r.y=-100});raf=requestAnimationFrame(drawBg)}
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;initRects()}

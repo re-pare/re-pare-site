@@ -1,0 +1,92 @@
+backend:
+  name: github
+  repo: your-username/your-repo-name
+  branch: main
+  auth_endpoint: api/auth
+  
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  # Blog Articles Collection
+  - name: "blog"
+    label: "Blog Articles"
+    folder: "content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Tag", name: "tag", widget: "select", options: ["Écologie", "Méthode", "Comparatif", "Coulisses", "Guide", "RE:Keyboard"] }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - { label: "Cover Image", name: "cover_image", widget: "image" }
+      - { label: "Content", name: "body", widget: "markdown" }
+      - { label: "Publish Date", name: "publish_date", widget: "datetime" }
+
+  # Products Collection - New
+  - name: "products_new"
+    label: "Products - RE:New"
+    folder: "content/products/new"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Category", name: "category", widget: "hidden", default: "new" }
+      - { label: "Images", name: "images", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Description", name: "description", widget: "markdown" }
+      - { label: "Vinted URL", name: "vinted_url", widget: "string", required: false }
+      - { label: "eBay URL", name: "ebay_url", widget: "string", required: false }
+      - { label: "Video URL", name: "video_url", widget: "string", required: false }
+      - { label: "Status", name: "status", widget: "select", options: ["À vendre", "Vendu"] }
+
+  # Products Collection - Product
+  - name: "products_product"
+    label: "Products - RE:Product"
+    folder: "content/products/product"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Category", name: "category", widget: "hidden", default: "product" }
+      - { label: "Images", name: "images", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Description", name: "description", widget: "markdown" }
+      - { label: "Vinted URL", name: "vinted_url", widget: "string", required: false }
+      - { label: "eBay URL", name: "ebay_url", widget: "string", required: false }
+      - { label: "Video URL", name: "video_url", widget: "string", required: false }
+      - { label: "Status", name: "status", widget: "select", options: ["À vendre", "Vendu"] }
+
+  # Products Collection - Keyboard
+  - name: "products_keyboard"
+    label: "Products - RE:Keyboard"
+    folder: "content/products/keyboard"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Category", name: "category", widget: "hidden", default: "keyboard" }
+      - { label: "Images", name: "images", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Description", name: "description", widget: "markdown" }
+      - { label: "Vinted URL", name: "vinted_url", widget: "string", required: false }
+      - { label: "eBay URL", name: "ebay_url", widget: "string", required: false }
+      - { label: "Video URL", name: "video_url", widget: "string", required: false }
+      - { label: "Status", name: "status", widget: "select", options: ["À vendre", "Vendu"] }
+
+  # Products Collection - Lab
+  - name: "products_lab"
+    label: "Products - RE:Lab"
+    folder: "content/products/lab"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Category", name: "category", widget: "hidden", default: "lab" }
+      - { label: "Images", name: "images", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Description", name: "description", widget: "markdown" }
+      - { label: "Vinted URL", name: "vinted_url", widget: "string", required: false }
+      - { label: "eBay URL", name: "ebay_url", widget: "string", required: false }
+      - { label: "Video URL", name: "video_url", widget: "string", required: false }
+      - { label: "Status", name: "status", widget: "select", options: ["À vendre", "Vendu"] }

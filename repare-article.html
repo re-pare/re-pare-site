@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RE:PARE — Article</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f8f7f3;--bg-2:#efede7;--bg-3:#e8e6df;
+  --border:#dddbd3;--border-mid:#c4c2b8;
+  --text:#111110;--text-muted:#7e7d76;--text-dim:#c0beb5;
+  --col:760px;
+  --panel:rgba(248,247,243,0.94);
+  --font-display:"Syne",sans-serif;
+  --font-serif:"DM Serif Display",serif;
+  --font-mono:"JetBrains Mono",monospace;
+}
+[data-theme="dark"]{
+  --bg:#0d0d0b;--bg-2:#151513;--bg-3:#1b1b18;
+  --border:#222220;--border-mid:#363632;
+  --text:#e0e0d6;--text-muted:#56564f;--text-dim:#2a2a27;
+  --panel:rgba(13,13,11,0.94);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-mono);font-weight:300;overflow-x:hidden;transition:background .4s,color .4s}
+::selection{background:var(--text);color:var(--bg)}
+body::after{content:"";position:fixed;inset:-100%;width:300%;height:300%;background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='200' height='200' filter='url(%23g)'/></svg>");opacity:.03;pointer-events:none;z-index:9999;animation:grain 12s steps(8) infinite}
+@keyframes grain{0%,100%{transform:translate(0,0)}10%{transform:translate(-1%,-2%)}20%{transform:translate(2%,1%)}30%{transform:translate(-1%,2%)}40%{transform:translate(1%,-1%)}50%{transform:translate(-2%,1%)}60%{transform:translate(1%,2%)}70%{transform:translate(-1%,-1%)}80%{transform:translate(2%,-2%)}90%{transform:translate(-2%,2%)}}
+#bg-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+nav,main,footer{position:relative;z-index:1}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 2rem;height:54px;border-bottom:1px solid var(--border);background:var(--bg);transition:background .4s,border-color .4s}
+.nav-logo{font-family:var(--font-display);font-size:26px;font-weight:800;letter-spacing:-1px;color:var(--text);text-decoration:none;transition:color .4s;line-height:1}
+.nav-logo .acc{color:#c8ff47}
+.nav-center{display:flex;list-style:none;justify-content:center}
+.nav-center a{font-size:9.5px;letter-spacing:.1em;color:var(--text-muted);text-decoration:none;padding:5px 14px;border-right:1px solid var(--border);transition:color .15s,border-color .4s;white-space:nowrap}
+.nav-center li:first-child a{border-left:1px solid var(--border)}
+.nav-center a:hover{color:var(--text)}
+[data-theme="dark"] .nav-center a:hover{color:#c8ff47}
+.nav-right{display:flex;align-items:center;gap:1.25rem;justify-content:flex-end}
+.theme-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;flex-shrink:0}
+.tgl-label{font-size:9px;letter-spacing:.14em;color:var(--text-muted);text-transform:uppercase;transition:color .4s;min-width:26px;text-align:right}
+.tgl-track{width:34px;height:18px;background:var(--bg-3);border:1px solid var(--border-mid);border-radius:9px;position:relative;transition:background .4s,border-color .4s;flex-shrink:0}
+[data-theme="dark"] .tgl-track{background:#c8ff47;border-color:#c8ff47}
+.tgl-thumb{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:var(--text-muted);transition:transform .25s cubic-bezier(.4,0,.2,1),background .4s}
+[data-theme="dark"] .tgl-thumb{transform:translateX(16px);background:#0d0d0b}
+.nav-cta{font-family:var(--font-mono);font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--bg);background:var(--text);text-decoration:none;padding:8px 16px;transition:opacity .15s,background .4s,color .4s;white-space:nowrap;flex-shrink:0}
+[data-theme="dark"] .nav-cta{background:#c8ff47;color:#0d0d0b}
+.nav-cta:hover{opacity:.7}
+
+/* HERO full bleed */
+main{padding-top:54px}
+.article-hero{width:100%;aspect-ratio:21/7;background:var(--bg-3);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);transition:background .4s,border-color .4s;overflow:hidden}
+.ph{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-dim);transition:color .4s}
+
+/* PANEL — neutral column, animé visible behind */
+.panel{max-width:var(--col);margin:0 auto;background:var(--panel);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-left:1px solid var(--border);border-right:1px solid var(--border);transition:background .4s,border-color .4s}
+.p-inner{padding:3.5rem 3.5rem;overflow:visible}
+
+/* meta */
+.art-meta{display:flex;align-items:center;gap:1.25rem;margin-bottom:2rem;flex-wrap:wrap}
+.art-tag{font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);transition:color .4s}
+.art-date{font-size:8.5px;letter-spacing:.1em;color:var(--text-dim);transition:color .4s}
+.msep{width:1px;height:10px;background:var(--border-mid);flex-shrink:0}
+.art-title{font-family:var(--font-serif);font-size:clamp(26px,3.8vw,42px);font-weight:400;line-height:1.08;margin-bottom:2rem}
+.art-lead{font-size:13px;color:var(--text-muted);line-height:1.85;border-left:2px solid var(--text-dim);padding-left:1.25rem;margin-bottom:2.5rem;transition:color .4s,border-color .4s}
+
+/* prose */
+.prose{font-size:13px;font-weight:300;line-height:1.95;letter-spacing:.015em;transition:color .4s}
+.prose p{margin-bottom:1.4em}
+.prose h2{font-family:var(--font-display);font-size:17px;font-weight:800;letter-spacing:-.3px;margin:2.5em 0 .7em}
+.prose h3{font-family:var(--font-mono);font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin:2em 0 .6em;transition:color .4s}
+
+/* FLOAT IMAGE — pops out right of panel */
+.float-right{
+  float:right;
+  width:260px;
+  margin:0 -90px 1.75rem 2.25rem;
+  position:relative;
+  shape-outside:border-box;
+}
+.float-img{
+  width:100%;aspect-ratio:4/3;
+  background:var(--bg-3);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .4s,border-color .4s;
+  box-shadow:6px 10px 28px rgba(0,0,0,.13);
+}
+[data-theme="dark"] .float-img{box-shadow:6px 10px 28px rgba(0,0,0,.45)}
+.float-caption{margin-top:.5rem;font-size:8px;color:var(--text-dim);letter-spacing:.06em;line-height:1.5;transition:color .4s}
+.clearfix::after{content:"";display:table;clear:both}
+
+/* BENCHMARK TABLE */
+.bench-wrap{margin:2.5rem 0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.bench-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.75rem;transition:color .4s}
+.bench-table{width:100%;min-width:420px;border-collapse:collapse;font-size:11px}
+.bench-table th{font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);font-weight:400;padding:.7rem 1rem;border-bottom:2px solid var(--border);text-align:left;transition:color .4s,border-color .4s}
+.bench-table th:not(:first-child){text-align:right}
+.bench-table td{padding:.75rem 1rem;border-bottom:1px solid var(--border);transition:border-color .4s}
+.bench-table td:not(:first-child){text-align:right}
+.bench-table tr:last-child td{border-bottom:none}
+.bench-table .game{color:var(--text);font-weight:400}
+.bench-table .before{color:var(--text-muted)}
+.bench-table .after{color:var(--text);font-weight:500}
+.gain{font-size:8.5px;letter-spacing:.04em;color:#2d7a2d;background:rgba(45,122,45,.1);padding:2px 7px;display:inline-block;white-space:nowrap}
+[data-theme="dark"] .gain{color:#c8ff47;background:rgba(200,255,71,.1)}
+.bench-table tbody tr:hover td{background:rgba(0,0,0,.025)}
+[data-theme="dark"] .bench-table tbody tr:hover td{background:rgba(255,255,255,.025)}
+
+/* REACTIONS */
+.react-wrap{padding:2.5rem 3.5rem;border-top:1px solid var(--border);transition:border-color .4s}
+.s-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.1rem;transition:color .4s}
+.emoji-row{display:flex;gap:.6rem;margin-bottom:3rem;flex-wrap:wrap}
+.e-btn{display:flex;align-items:center;gap:.4rem;background:transparent;border:1px solid var(--border);padding:.45rem .9rem;cursor:pointer;font-family:var(--font-mono);font-size:10px;color:var(--text-muted);transition:background .18s,border-color .18s,color .18s}
+.e-btn:hover,.e-btn.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+[data-theme="dark"] .e-btn:hover,[data-theme="dark"] .e-btn.on{background:#c8ff47;color:#0d0d0b;border-color:#c8ff47}
+.e-btn .ei{font-size:13px}
+.e-btn .en{font-size:9px;font-weight:500}
+
+/* Q&A */
+.qa{margin-bottom:1.1rem}
+.qa-q{display:flex;gap:1rem;align-items:baseline;padding:1rem 1.25rem;background:var(--bg-2);border:1px solid var(--border);transition:background .4s,border-color .4s}
+.qa-who{font-size:8px;letter-spacing:.1em;color:var(--text-dim);white-space:nowrap;flex-shrink:0;transition:color .4s}
+.qa-txt{font-size:12px;font-weight:300;line-height:1.7;transition:color .4s}
+.qa-a{padding:.9rem 1.25rem 1rem 2.5rem;border:1px solid var(--border);border-top:none;transition:border-color .4s}
+.qa-rtag{font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:#c8ff47;margin-bottom:.3rem}
+.qa-atxt{font-size:12px;font-weight:300;color:var(--text-muted);line-height:1.7;transition:color .4s}
+
+/* FORM */
+.f-title{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin:2.5rem 0 1rem;transition:color .4s}
+.q-form{display:flex;flex-direction:column;gap:.6rem;margin-bottom:2rem}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.f-input,.f-textarea{width:100%;background:rgba(248,247,243,.6);backdrop-filter:blur(4px);border:1.5px solid var(--border);padding:.8rem 1rem;font-family:var(--font-mono);font-size:11px;font-weight:300;color:var(--text);letter-spacing:.04em;outline:none;resize:none;transition:border-color .2s,background .4s,color .4s}
+[data-theme="dark"] .f-input,[data-theme="dark"] .f-textarea{background:rgba(21,21,19,.6)}
+.f-input::placeholder,.f-textarea::placeholder{color:var(--text-dim)}
+.f-input:focus,.f-textarea:focus{border-color:var(--text)}
+[data-theme="dark"] .f-input:focus,[data-theme="dark"] .f-textarea:focus{border-color:#c8ff47}
+.f-textarea{min-height:90px}
+.f-note{font-size:8.5px;color:var(--text-dim);letter-spacing:.05em;line-height:1.6;transition:color .4s}
+.f-submit{align-self:flex-start;font-family:var(--font-mono);font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--bg);background:var(--text);border:none;padding:11px 24px;cursor:pointer;transition:opacity .15s,background .4s,color .4s}
+[data-theme="dark"] .f-submit{background:#c8ff47;color:#0d0d0b}
+.f-submit:hover{opacity:.75}
+
+/* FOOTER */
+footer{display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:1.4rem 2rem;gap:2.5rem;border-top:1px solid var(--border);transition:border-color .4s,background .4s;background:var(--bg);position:relative;z-index:10000}
+.footer-logo{font-family:var(--font-display);font-size:13px;font-weight:800;letter-spacing:-.2px;color:var(--text-muted);transition:color .4s}
+.footer-nav{display:flex;align-items:center;gap:1.75rem;list-style:none}
+.footer-nav a{font-size:8.5px;color:var(--text-dim);text-decoration:none;letter-spacing:.12em;text-transform:uppercase;transition:color .15s}
+.footer-nav a:hover{color:var(--text)}
+[data-theme="dark"] .footer-nav a:hover{color:#c8ff47}
+.footer-copy{font-size:8.5px;color:var(--text-dim);letter-spacing:.06em;text-align:right;transition:color .4s;white-space:nowrap}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .float-right{float:none;width:100%;margin:1.5rem 0;box-shadow:none}
+  .float-img{aspect-ratio:16/7}
+}
+@media(max-width:860px){
+  .nav-center{display:none}
+  nav{grid-template-columns:1fr auto}
+  .f-row{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  nav{padding:0 1.25rem;height:50px}
+  .nav-logo{font-size:20px}
+  .nav-cta{padding:7px 10px;font-size:8.5px}
+  .p-inner,.react-wrap{padding:2.5rem 1.5rem}
+  footer{grid-template-columns:1fr;gap:1rem;padding:1.5rem 1.25rem;text-align:center}
+  .footer-nav{flex-wrap:wrap;justify-content:center;gap:1rem}
+  .footer-copy{text-align:center}
+}
+
+/* ─── BREADCRUMB ─── */
+.breadcrumb{width:100%;background:var(--bg);border-bottom:1px solid var(--border);position:relative;z-index:2;transition:background .4s,border-color .4s}
+.breadcrumb-inner{padding:.65rem 2rem;display:flex;align-items:center;gap:.55rem;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.1em;color:var(--text-dim);transition:color .4s}
+.breadcrumb-inner a{color:var(--text-dim);text-decoration:none;transition:color .15s}
+.breadcrumb-inner a:hover{color:var(--text)}
+[data-theme="dark"] .breadcrumb-inner a:hover{color:#c8ff47}
+.breadcrumb-sep{color:var(--border-mid);transition:color .4s}
+.breadcrumb-cur{color:var(--text-muted);transition:color .4s}
+
+/* ─── PLATFORMS BAR ─── */
+.platforms{padding:1.1rem 2rem;display:flex;align-items:center;gap:2.5rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg-2);transition:border-color .4s,background .4s;position:relative;z-index:10000}
+.plat-label{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);white-space:nowrap;flex-shrink:0;transition:color .4s}
+.plat-list{display:flex;align-items:center;gap:1.75rem;flex-wrap:wrap}
+.plat-link{font-size:9.5px;color:var(--text-dim);letter-spacing:.06em;text-decoration:none;transition:color .18s;border-bottom:1px solid transparent;padding-bottom:1px}
+.plat-link:hover{color:var(--text);border-bottom-color:var(--border-mid)}
+[data-theme="dark"] .plat-link:hover{color:#c8ff47;border-bottom-color:#c8ff47}
+@media(max-width:600px){.platforms{flex-wrap:wrap;gap:1rem;padding:1rem 1.25rem}}
+
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<nav>
+  <a href="repare-landing.html" class="nav-logo">re<span class="acc">:</span>pare</a>
+  <ul class="nav-center">
+    <li><a href="repare-product.html">RE:Lab</a></li>
+    <li><a href="repare-custom.html">RE:Custom</a></li>
+    <li><a href="repare-keyboard.html">RE:Keyboard</a></li>
+    <li><a href="repare-blog.html">RE:New</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <span class="tgl-label" id="tgl-lbl">Nuit</span>
+      <div class="tgl-track"><div class="tgl-thumb"></div></div>
+    </div>
+    <a href="repare-landing.html#s-lab" class="nav-cta">Voir les machines &rarr;</a>
+  </div>
+</nav>
+
+<main>
+
+  <div class="breadcrumb">
+    <div class="breadcrumb-inner">
+      <a href="repare-landing.html">Accueil</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="repare-blog.html">Blog</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-cur">Pourquoi reconditionner plut&ocirc;t qu&rsquo;acheter neuf</span>
+    </div>
+  </div>
+
+  <div class="article-hero">
+    <span class="ph">Photo de couverture &mdash; format 21:7</span>
+  </div>
+
+  <div class="panel">
+    <div class="p-inner">
+
+      <div class="art-meta">
+        <span class="art-tag">&Eacute;cologie</span>
+        <div class="msep"></div>
+        <span class="art-date">12 janvier 2025</span>
+        <div class="msep"></div>
+        <span class="art-date">6 min de lecture</span>
+      </div>
+
+      <h1 class="art-title">Pourquoi reconditionner plut&ocirc;t qu&rsquo;acheter neuf</h1>
+
+      <p class="art-lead">Chaque ann&eacute;e, des millions de PC gaming parfaitement fonctionnels finissent &agrave; la d&eacute;charge parce qu&rsquo;ils &laquo;&nbsp;datent de deux ans&nbsp;&raquo;. RE:PARE est n&eacute; pour r&eacute;pondre &agrave; ce g&acirc;chis &mdash; voici pourquoi le reconditionn&eacute; n&rsquo;est pas un compromis, c&rsquo;est souvent le meilleur choix.</p>
+
+      <div class="prose clearfix">
+        <h2>Le hardware ne vieillit pas aussi vite qu&rsquo;on le croit</h2>
+
+        <div class="float-right">
+          <div class="float-img"><span style="font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim)">Photo inline</span></div>
+          <p class="float-caption">Une RTX 3070 ouverte et nettoy&eacute;e &mdash; comme neuve avant d&rsquo;&ecirc;tre remise en service.</p>
+        </div>
+
+        <p>[Votre texte ici &mdash; expliquer concr&egrave;tement pourquoi une RTX 3070 de 2021 fait encore tourner n&rsquo;importe quel jeu en 2025. Les cycles marketing ne correspondent pas &agrave; la r&eacute;alit&eacute; des performances.]</p>
+        <p>[Deuxi&egrave;me paragraphe &mdash; chiffres, exemples de jeux test&eacute;s. Concret et honn&ecirc;te.]</p>
+
+        <h2>Ce que disent les benchmarks</h2>
+        <p>[Texte d&rsquo;introduction au tableau &mdash; expliquer le contexte du test, la machine utilis&eacute;e, les r&eacute;glages graphiques.]</p>
+
+        <div class="bench-wrap">
+          <div class="bench-label">Performances &mdash; RTX 3070 reconditionnée, 1080p Ultra</div>
+          <table class="bench-table">
+            <thead>
+              <tr>
+                <th>Jeu</th>
+                <th>Avant optimisation</th>
+                <th>Apr&egrave;s optimisation</th>
+                <th>Gain</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="game">Cyberpunk 2077</td><td class="before">54 fps</td><td class="after">81 fps</td><td><span class="gain">+50%</span></td></tr>
+              <tr><td class="game">Elden Ring</td><td class="before">62 fps</td><td class="after">90 fps</td><td><span class="gain">+45%</span></td></tr>
+              <tr><td class="game">Forza Horizon 5</td><td class="before">88 fps</td><td class="after">124 fps</td><td><span class="gain">+41%</span></td></tr>
+              <tr><td class="game">Warzone 2.0</td><td class="before">110 fps</td><td class="after">164 fps</td><td><span class="gain">+49%</span></td></tr>
+              <tr><td class="game">The Witcher 3 RT</td><td class="before">48 fps</td><td class="after">72 fps</td><td><span class="gain">+50%</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>L&rsquo;impact &eacute;cologique du neuf qu&rsquo;on ne calcule jamais</h2>
+
+        <div class="float-right">
+          <div class="float-img"><span style="font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim)">Photo inline</span></div>
+          <p class="float-caption">Chaque GPU neuf repr&eacute;sente environ 70kg de CO&sup2; &mdash; rien que pour la fabrication.</p>
+        </div>
+
+        <h3>Ce que vous &eacute;vitez en achetant reconditionn&eacute;</h3>
+        <p>[Explication simple &mdash; extraction mini&egrave;re, transport, emballages, obsolescence programm&eacute;e. Sans catastrophisme, juste les faits.]</p>
+        <p>[Conclusion de l&rsquo;article &mdash; l&rsquo;argument final. Lien discret vers RE:Lab.]</p>
+      </div>
+
+    </div>
+
+    <!-- REACTIONS -->
+    <div class="react-wrap">
+      <div class="s-label">R&eacute;actions</div>
+      <div class="emoji-row">
+        <button class="e-btn" onclick="react(this)"><span class="ei">&#128293;</span><span class="en">12</span></button>
+        <button class="e-btn" onclick="react(this)"><span class="ei">&#128161;</span><span class="en">7</span></button>
+        <button class="e-btn" onclick="react(this)"><span class="ei">&#10067;</span><span class="en">3</span></button>
+        <button class="e-btn" onclick="react(this)"><span class="ei">&#128079;</span><span class="en">21</span></button>
+      </div>
+
+      <div class="s-label">Questions &amp; R&eacute;ponses</div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="qa-who">&mdash; Th&eacute;o M.</span><p class="qa-txt">Est-ce que la garantie s&rsquo;applique si un composant l&acirc;che dans les 6 premiers mois&nbsp;?</p></div>
+        <div class="qa-a"><div class="qa-rtag">RE:PARE</div><p class="qa-atxt">[Votre r&eacute;ponse ici &mdash; politique de garantie, ce qui est couvert, comment contacter.]</p></div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="qa-who">&mdash; Camille R.</span><p class="qa-txt">Vous vendez uniquement sur plateformes tierces ou il est possible d&rsquo;acheter directement&nbsp;?</p></div>
+        <div class="qa-a"><div class="qa-rtag">RE:PARE</div><p class="qa-atxt">[Votre r&eacute;ponse ici &mdash; mod&egrave;le de distribution, plateformes disponibles, pourquoi ce choix.]</p></div>
+      </div>
+
+      <div class="f-title">Poser une question</div>
+      <div class="q-form" id="q-form">
+        <div class="f-row">
+          <input class="f-input" type="text" placeholder="Pr&eacute;nom (optionnel)">
+          <input class="f-input" type="email" placeholder="Email (optionnel &mdash; pour recevoir la r&eacute;ponse)">
+        </div>
+        <textarea class="f-textarea" placeholder="Votre question sur cet article&hellip;"></textarea>
+        <p class="f-note">Les questions pertinentes sont publi&eacute;es avec une r&eacute;ponse RE:PARE sous l&rsquo;article. Votre email ne sera jamais affich&eacute; ni transmis.</p>
+        <button class="f-submit" onclick="submitQ()">Envoyer &rarr;</button>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<div class="platforms">
+  <span class="plat-label">Disponible sur</span>
+  <div class="plat-list">
+    <a href="https://www.ebay.fr/usr/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">eBay</a>
+    <a href="https://www.leboncoin.fr/profil/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">Le Bon Coin</a>
+    <a href="https://www.vinted.fr/member/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">Vinted</a>
+    <a href="https://www.etsy.com/shop/VOTRE-BOUTIQUE" target="_blank" rel="noopener" class="plat-link">Etsy</a>
+    <a href="https://www.depop.com/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">Depop</a>
+    <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=VOTRE-ID" target="_blank" rel="noopener" class="plat-link">Kleinanzeigen</a>
+    <a href="https://www.2ememain.be/verkopers/VOTRE-PROFIL" target="_blank" rel="noopener" class="plat-link">2ème Main</a>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-logo">re:pare</span>
+  <ul class="footer-nav">
+    <li><a href="repare-blog.html">Blog</a></li>
+    <li><a href="repare-about.html">À propos</a></li>
+    <li><a href="repare-contact.html">Aide</a></li>
+    <li><a href="repare-mentions.html">Mentions l&eacute;gales</a></li>
+    <li><a href="repare-contact.html">Contact</a></li>
+  </ul>
+  <span class="footer-copy">&copy; 2025 RE:PARE &mdash; Mulhouse, France</span>
+</footer>
+
+<script>
+function isDark(){return document.documentElement.getAttribute("data-theme")==="dark"}
+const canvas=document.getElementById("bg-canvas");
+const ctx=canvas.getContext("2d");
+let rects=[],raf;
+function initRects(){rects=[];const w=canvas.width,h=canvas.height;for(let i=0;i<28;i++){const s=30+Math.random()*140;rects.push({x:Math.random()*w,y:Math.random()*h,w:s,h:s*(0.35+Math.random()*0.85),vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.15,a:0.05+Math.random()*0.1,rot:Math.random()*Math.PI*2,vr:(Math.random()-.5)*.003})}}
+function drawBg(){const w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);const dark=isDark();rects.forEach(r=>{ctx.save();ctx.translate(r.x,r.y);ctx.rotate(r.rot);ctx.globalAlpha=dark?r.a*2.4:r.a*3.2;ctx.strokeStyle=dark?"#c8ff47":"#4a4a45";ctx.lineWidth=dark?.8:1;ctx.strokeRect(-r.w/2,-r.h/2,r.w,r.h);ctx.restore();r.x+=r.vx;r.y+=r.vy;r.rot+=r.vr;if(r.x<-160)r.x=w+100;if(r.x>w+160)r.x=-100;if(r.y<-160)r.y=h+100;if(r.y>h+160)r.y=-100});raf=requestAnimationFrame(drawBg)}
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;initRects()}
+function react(btn){const on=btn.classList.contains("on");const n=btn.querySelector(".en");let c=parseInt(n.textContent);btn.classList.toggle("on");n.textContent=on?c-1:c+1}
+function submitQ(){const ta=document.querySelector(".f-textarea");if(!ta.value.trim())return;const msg=document.createElement("p");msg.style.cssText="font-size:10px;color:var(--text-muted);letter-spacing:.06em;padding:1rem 0 2rem";msg.textContent="Question envoyée — elle sera publiée si elle est pertinente.";document.getElementById("q-form").replaceWith(msg)}
+function setTheme(theme){
+  const html=document.documentElement;
+  html.setAttribute("data-theme",theme);
+  const label=document.getElementById("tgl-lbl");
+  if(label) label.textContent = theme==="dark" ? "Jour" : "Nuit";
+  localStorage.setItem("repareTheme", theme);
+}
+
+function initTheme(){
+  const savedTheme = localStorage.getItem("repareTheme");
+  setTheme(savedTheme || "dark");
+}
+
+function toggleTheme(){
+  const html=document.documentElement;
+  const dark=html.getAttribute("data-theme")==="dark";
+  setTheme(dark?"light":"dark");
+}
+
+if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", initTheme);
+} else {
+  initTheme();
+}
+
+resizeCanvas();drawBg();
+window.addEventListener("resize",()=>{cancelAnimationFrame(raf);resizeCanvas();drawBg()});
+</script>
+</body>
+</html>
