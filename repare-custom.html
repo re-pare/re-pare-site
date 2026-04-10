@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
@@ -45,11 +45,20 @@ nav,main,footer{position:relative;z-index:1}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 2rem;height:54px;border-bottom:1px solid var(--border);background:var(--bg);transition:background .4s,border-color .4s}
 .nav-logo{font-family:var(--font-display);font-size:26px;font-weight:800;letter-spacing:-1px;color:var(--text);text-decoration:none;transition:color .4s;line-height:1}
 .nav-logo .acc{color:#c8ff47}
-.nav-center{display:flex;list-style:none;justify-content:center}
-.nav-center a{font-size:9.5px;letter-spacing:.1em;color:var(--text-muted);text-decoration:none;padding:5px 14px;border-right:1px solid var(--border);transition:color .15s,border-color .4s;white-space:nowrap}
-.nav-center li:first-child a{border-left:1px solid var(--border)}
-.nav-center a:hover{color:var(--text)}
-[data-theme="dark"] .nav-center a:hover{color:#c8ff47}
+.nav-center{display:flex;list-style:none;justify-content:center;align-items:stretch}
+.nav-group{position:relative}
+.nav-group>a{display:flex;align-items:center;height:100%;font-size:9.5px;letter-spacing:.1em;color:var(--text-muted);text-decoration:none;padding:5px 14px;border-right:1px solid var(--border);transition:color .15s,border-color .4s,background .18s;white-space:nowrap}
+.nav-group:first-child>a{border-left:1px solid var(--border)}
+.nav-group>a:hover{color:var(--text)}
+.nav-dropdown{position:absolute;top:calc(100% + 1px);left:0;min-width:290px;display:grid;gap:0;background:var(--bg-2);border:1px solid var(--border);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(8px);transition:opacity .18s ease,transform .18s ease,visibility .18s ease;box-shadow:0 12px 40px rgba(0,0,0,.12)}
+.nav-group:hover .nav-dropdown{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
+.nav-dropdown a{display:block;padding:.8rem .95rem;border-bottom:1px solid var(--border);text-decoration:none;color:var(--text);background:transparent;transition:background .18s,color .18s}
+.nav-dropdown a:last-child{border-bottom:none}
+.nav-dropdown a:hover{background:var(--bg-3)}
+.nav-dd-title{display:block;font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.22rem}
+.nav-dd-desc{display:block;font-size:9px;line-height:1.55;color:var(--text-muted);letter-spacing:.02em}
+[data-theme="dark"] .nav-group>a:hover,[data-theme="dark"] .nav-dropdown a:hover .nav-dd-title{color:#c8ff47}
+[data-theme="dark"] .nav-dropdown a:hover{background:#1b1b18}
 .nav-right{display:flex;align-items:center;gap:1.25rem;justify-content:flex-end}
 .theme-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;flex-shrink:0}
 .tgl-label{font-size:9px;letter-spacing:.14em;color:var(--text-muted);text-transform:uppercase;transition:color .4s;min-width:26px;text-align:right}
@@ -75,7 +84,7 @@ main{padding-top:54px;min-height:calc(100vh - 54px);display:flex;flex-direction:
 .f-group{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.65rem}
 .f-label{font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);transition:color .4s}
 .f-req{color:var(--text-muted)}
-.f-input,.f-textarea,.f-select{width:100%;background:rgba(248,247,243,.7);backdrop-filter:blur(4px);border:1.5px solid var(--border);padding:.8rem 1rem;font-family:var(--font-mono);font-size:11px;font-weight:300;color:var(--text);letter-spacing:.04em;outline:none;resize:none;transition:border-color .2s,background .4s,color .4s;-webkit-appearance:none}
+.f-input,.f-textarea,.f-select{width:100%;background:rgba(248,247,243,.7);backdrop-filter:blur(4px);border:1.5px solid var(--border);padding:.8rem 1rem;font-family:var(--font-mono);font-size:11px;font-weight:300;color:var(--text);letter-spacing:.04em;outline:none;resize:none;transition:border-color .2s,background .4s,color .4s;-webkit-appearance:none;appearance:none}
 [data-theme="dark"] .f-input,[data-theme="dark"] .f-textarea,[data-theme="dark"] .f-select{background:rgba(21,21,19,.7)}
 .f-input::placeholder,.f-textarea::placeholder{color:var(--text-dim)}
 .f-input:focus,.f-textarea:focus,.f-select:focus{border-color:var(--text)}
@@ -163,6 +172,26 @@ footer{display:grid;grid-template-columns:auto 1fr auto;align-items:center;paddi
   footer{grid-template-columns:1fr;gap:1rem;padding:1.5rem 1.25rem;text-align:center}
   .footer-nav{flex-wrap:wrap;justify-content:center;gap:1rem}.footer-copy{text-align:center}
 }
+/* global ui fixes */
+html{height:100%}
+body{min-height:100vh;display:flex;flex-direction:column}
+main{flex:1 0 auto;width:100%}
+.platforms{background:var(--bg-2)!important;position:relative;z-index:2}
+footer{background:var(--bg)!important;position:relative;z-index:2}
+.nav-dropdown{top:100%!important;transform:translateY(0)!important}
+.nav-group:hover .nav-dropdown,.nav-group:focus-within .nav-dropdown{opacity:1;visibility:visible;pointer-events:auto}
+/* shared uniform polish */
+nav + .breadcrumb{margin-top:54px}
+nav + .breadcrumb + main{padding-top:0!important}
+main:has(.breadcrumb){padding-top:0!important}
+main > .page-container:has(.breadcrumb),main > .wrap:has(.breadcrumb),main > .page-shell:has(.breadcrumb),main > .page:has(.breadcrumb){padding-top:0!important}
+@media(max-width:600px){nav + .breadcrumb{margin-top:50px}}
+.plat-link,.plat-link:hover{border-bottom:none!important}
+.plat-link::after,.plat-link:hover::after{display:none!important;transform:none!important}
+.plat-link{padding-bottom:0!important;transition:color .18s ease!important}
+.plat-link:hover{color:var(--text)!important}
+[data-theme="dark"] .plat-link:hover{color:#c8ff47!important}
+.card::after,.service-card::after,.machine-card::after,.category-card::after,.panel::after,.social-card::after,.product-card::before,.filter-btn::before,.cat-item::before,.buy-btn::before{transition:transform .46s cubic-bezier(.22,1,.36,1),background .4s!important}
 </style>
 </head>
 <body>
@@ -172,19 +201,12 @@ footer{display:grid;grid-template-columns:auto 1fr auto;align-items:center;paddi
 <nav>
   <a href="index.html" class="nav-logo">re<span class="acc">:</span>pare</a>
   <ul class="nav-center">
-    <li><a href="repare-catalogue.html?filter=lab">RE:Lab</a></li>
-    <li><a href="repare-custom.html">RE:Custom</a></li>
-    <li><a href="repare-catalogue.html?filter=laptop">RE:Laptop</a></li>
-    <li><a href="repare-catalogue.html?filter=keyboard">RE:Keyboard</a></li>
-    <li><a href="repare-catalogue.html?filter=new">RE:New</a></li>
+    <li class="nav-group"><a href="repare-ordinateurs.html">Ordinateurs</a><div class="nav-dropdown"><a href="repare-lab.html"><span class="nav-dd-title">RE:Lab</span><span class="nav-dd-desc">Old is Gold — PC gaming reconditionnés et optimisés.</span></a><a href="repare-new-builds.html"><span class="nav-dd-title">RE:New</span><span class="nav-dd-desc">Configurations neuves montées avec une vraie logique de budget.</span></a><a href="repare-laptops.html"><span class="nav-dd-title">RE:Lap</span><span class="nav-dd-desc">Portables reconditionnés pour le jeu, les études ou le quotidien.</span></a><a href="repare-custom.html"><span class="nav-dd-title">RE:Custom</span><span class="nav-dd-desc">Demande de build sur-mesure selon vos usages.</span></a></div></li>
+    <li class="nav-group"><a href="repare-services.html">Nos services</a><div class="nav-dropdown"><a href="repare-custom.html"><span class="nav-dd-title">RE:Custom</span><span class="nav-dd-desc">Devis et demande de build sur-mesure.</span></a><a href="repare-clear.html"><span class="nav-dd-title">RE:Clear</span><span class="nav-dd-desc">Optimisation Windows 10/11.</span></a><a href="repare-pare.html"><span class="nav-dd-title">RE:Pare</span><span class="nav-dd-desc">Réparation autour de Mulhouse.</span></a></div></li>
+    <li class="nav-group"><a href="repare-claviers.html">Claviers</a><div class="nav-dropdown"><a href="repare-keyboards.html"><span class="nav-dd-title">RE:Keyboard</span><span class="nav-dd-desc">Claviers reconditionnés et moddés.</span></a><a href="repare-mod.html"><span class="nav-dd-title">RE:Mod</span><span class="nav-dd-desc">Article et conseils de moddage.</span></a></div></li>
+    <li class="nav-group"><a href="repare-about.html">À propos</a><div class="nav-dropdown"><a href="repare-blog.html"><span class="nav-dd-title">Blog</span><span class="nav-dd-desc">Guides, coulisses et analyses RE:PARE.</span></a><a href="repare-about.html"><span class="nav-dd-title">À propos</span><span class="nav-dd-desc">La vision et la méthode RE:PARE.</span></a><a href="repare-contact.html"><span class="nav-dd-title">Aide</span><span class="nav-dd-desc">FAQ, contact et accompagnement.</span></a><a href="repare-mentions.html"><span class="nav-dd-title">Mentions légales</span><span class="nav-dd-desc">Cadre légal et informations éditeur.</span></a><a href="repare-contact.html"><span class="nav-dd-title">Contact</span><span class="nav-dd-desc">Parlons de votre besoin.</span></a><a href="repare-reseaux.html"><span class="nav-dd-title">Nos réseaux</span><span class="nav-dd-desc">Retrouvez RE:PARE sur les plateformes sociales.</span></a><a href="repare-ou-acheter.html"><span class="nav-dd-title">Où acheter RE:PARE</span><span class="nav-dd-desc">Tous les revendeurs et le fonctionnement des ventes.</span></a></div></li>
   </ul>
-  <div class="nav-right">
-    <div class="theme-toggle" onclick="toggleTheme()">
-      <span class="tgl-label" id="tgl-lbl">Nuit</span>
-      <div class="tgl-track"><div class="tgl-thumb"></div></div>
-    </div>
-    <a href="repare-catalogue.html" class="nav-cta">Voir les machines &rarr;</a>
-  </div>
+  <div class="nav-right"><div class="theme-toggle" onclick="toggleTheme()"><span class="tgl-label" id="tgl-lbl">Nuit</span><div class="tgl-track"><div class="tgl-thumb"></div></div></div><a href="repare-catalogue.html" class="nav-cta">Tous nos produits &rarr;</a></div>
 </nav>
 
 <main>
@@ -338,8 +360,7 @@ footer{display:grid;grid-template-columns:auto 1fr auto;align-items:center;paddi
   <ul class="footer-nav">
     <li><a href="repare-blog.html">Blog</a></li>
     <li><a href="repare-about.html">&Agrave; propos</a></li>
-    <li><a href="repare-contact.html">Aide</a></li>
-    <li><a href="repare-mentions.html">Mentions l&eacute;gales</a></li>
+    <li><a href="repare-contact.html">Aide</a></li>    <li><a href="repare-reseaux.html">Nos réseaux</a></li>    <li><a href="repare-mentions.html">Mentions l&eacute;gales</a></li>
     <li><a href="repare-contact.html">Contact</a></li>
   </ul>
   <span class="footer-copy">&copy; 2025 RE:PARE &mdash; Mulhouse, France</span>
@@ -497,3 +518,9 @@ function submitForm(e){
 </script>
 </body>
 </html>
+
+
+
+
+
+

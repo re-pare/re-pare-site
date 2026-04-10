@@ -20,8 +20,8 @@ class DataLoader {
    * Parse YAML front matter from markdown files
    */
   parseFrontMatter(content) {
-    const match = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-    if (!match) return { frontmatter: {}, body: '' };
+    const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+    if (!match) return { frontmatter: {}, body: content.trim() };
 
     const frontmatterStr = match[1];
     const body = match[2];
@@ -77,15 +77,28 @@ class DataLoader {
     try {
       const response = await fetch('/content/blog/');
       const html = await response.text();
-      const files = this.parseFileList(html);
+      const knownFiles = [
+        'pourquoi-reconditionner.md',
+        're-mod.md',
+        'ou-acheter-repare.md',
+        'nos-reseaux.md'
+      ];
+      const files = [...new Set([...this.parseFileList(html), ...knownFiles])];
 
       for (const file of files.filter(f => f.endsWith('.md'))) {
-        const postResponse = await fetch(`/content/blog/${file}`);
-        const postContent = await postResponse.text();
-        const { frontmatter, body } = this.parseFrontMatter(postContent);
+        try {
+          const postResponse = await fetch(`/content/blog/${file}`);
+          if (!postResponse.ok) continue;
 
-        frontmatter.body = body;
-        this.blogPosts.push(frontmatter);
+          const postContent = await postResponse.text();
+          const { frontmatter, body } = this.parseFrontMatter(postContent);
+          if (!frontmatter.title && !frontmatter.slug) continue;
+
+          frontmatter.body = body;
+          this.blogPosts.push(frontmatter);
+        } catch (postError) {
+          console.warn(`Could not load blog post ${file}:`, postError);
+        }
       }
 
       // Sort by date (newest first)
@@ -131,12 +144,16 @@ class DataLoader {
    * Extract file list from directory HTML (GitHub or similar)
    */
   parseFileList(html) {
-    const fileRegex = /href="[^"]*\/([\w\-\.]+\.md)"/g;
+    const fileRegex = /href="([^"]+\.md)"/g;
     const files = [];
     let match;
 
     while ((match = fileRegex.exec(html)) !== null) {
-      files.push(match[1]);
+      const href = match[1];
+      const file = href.split('/').pop();
+      if (file && !files.includes(file)) {
+        files.push(file);
+      }
     }
 
     return files;

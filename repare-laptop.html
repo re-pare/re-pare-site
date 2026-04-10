@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
@@ -30,11 +30,20 @@ nav,main,footer{position:relative;z-index:1}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 2rem;height:54px;border-bottom:1px solid var(--border);background:var(--bg);transition:background .4s,border-color .4s}
 .nav-logo{font-family:var(--font-display);font-size:26px;font-weight:800;letter-spacing:-1px;color:var(--text);text-decoration:none;transition:color .4s;line-height:1}
 .nav-logo .acc{color:#c8ff47}
-.nav-center{display:flex;list-style:none;justify-content:center}
-.nav-center a{font-size:9.5px;letter-spacing:.1em;color:var(--text-muted);text-decoration:none;padding:5px 14px;border-right:1px solid var(--border);transition:color .15s,border-color .4s;white-space:nowrap}
-.nav-center li:first-child a{border-left:1px solid var(--border)}
-.nav-center a:hover{color:var(--text)}
-[data-theme="dark"] .nav-center a:hover{color:#c8ff47}
+.nav-center{display:flex;list-style:none;justify-content:center;align-items:stretch}
+.nav-group{position:relative}
+.nav-group>a{display:flex;align-items:center;height:100%;font-size:9.5px;letter-spacing:.1em;color:var(--text-muted);text-decoration:none;padding:5px 14px;border-right:1px solid var(--border);transition:color .15s,border-color .4s,background .18s;white-space:nowrap}
+.nav-group:first-child>a{border-left:1px solid var(--border)}
+.nav-group>a:hover{color:var(--text)}
+.nav-dropdown{position:absolute;top:calc(100% + 1px);left:0;min-width:290px;display:grid;gap:0;background:var(--bg-2);border:1px solid var(--border);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(8px);transition:opacity .18s ease,transform .18s ease,visibility .18s ease;box-shadow:0 12px 40px rgba(0,0,0,.12)}
+.nav-group:hover .nav-dropdown{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
+.nav-dropdown a{display:block;padding:.8rem .95rem;border-bottom:1px solid var(--border);text-decoration:none;color:var(--text);background:transparent;transition:background .18s,color .18s}
+.nav-dropdown a:last-child{border-bottom:none}
+.nav-dropdown a:hover{background:var(--bg-3)}
+.nav-dd-title{display:block;font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.22rem}
+.nav-dd-desc{display:block;font-size:9px;line-height:1.55;color:var(--text-muted);letter-spacing:.02em}
+[data-theme="dark"] .nav-group>a:hover,[data-theme="dark"] .nav-dropdown a:hover .nav-dd-title{color:#c8ff47}
+[data-theme="dark"] .nav-dropdown a:hover{background:#1b1b18}
 .nav-right{display:flex;align-items:center;gap:1.25rem;justify-content:flex-end}
 .theme-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;flex-shrink:0}
 .tgl-label{font-size:9px;letter-spacing:.14em;color:var(--text-muted);text-transform:uppercase;transition:color .4s;min-width:26px;text-align:right}
@@ -139,6 +148,26 @@ footer{display:grid;grid-template-columns:auto 1fr auto;align-items:center;paddi
 @media(max-width:1000px){.product-hero{grid-template-columns:1fr}.product-info{border-left:none;border-top:1px solid var(--border)}.sections{grid-template-columns:1fr}.section-block{border-right:none}.section-block:nth-last-child(-n+2){border-bottom:1px solid var(--border)}.section-block:last-child{border-bottom:none}}
 @media(max-width:860px){.nav-center{display:none}nav{grid-template-columns:1fr auto}}
 @media(max-width:600px){nav{padding:0 1.25rem;height:50px}.nav-logo{font-size:20px}.nav-cta{padding:7px 10px;font-size:8.5px}.product-info{padding:2rem 1.25rem}.section-block{padding:2rem 1.25rem}.video-input-row{flex-direction:column}footer{grid-template-columns:1fr;gap:1rem;padding:1.5rem 1.25rem;text-align:center}.footer-nav{flex-wrap:wrap;justify-content:center;gap:1rem}.footer-copy{text-align:center}.platforms{flex-wrap:wrap;gap:1rem;padding:1rem 1.25rem}}
+/* global ui fixes */
+html{height:100%}
+body{min-height:100vh;display:flex;flex-direction:column}
+main{flex:1 0 auto;width:100%}
+.platforms{background:var(--bg-2)!important;position:relative;z-index:2}
+footer{background:var(--bg)!important;position:relative;z-index:2}
+.nav-dropdown{top:100%!important;transform:translateY(0)!important}
+.nav-group:hover .nav-dropdown,.nav-group:focus-within .nav-dropdown{opacity:1;visibility:visible;pointer-events:auto}
+/* shared uniform polish */
+nav + .breadcrumb{margin-top:54px}
+nav + .breadcrumb + main{padding-top:0!important}
+main:has(.breadcrumb){padding-top:0!important}
+main > .page-container:has(.breadcrumb),main > .wrap:has(.breadcrumb),main > .page-shell:has(.breadcrumb),main > .page:has(.breadcrumb){padding-top:0!important}
+@media(max-width:600px){nav + .breadcrumb{margin-top:50px}}
+.plat-link,.plat-link:hover{border-bottom:none!important}
+.plat-link::after,.plat-link:hover::after{display:none!important;transform:none!important}
+.plat-link{padding-bottom:0!important;transition:color .18s ease!important}
+.plat-link:hover{color:var(--text)!important}
+[data-theme="dark"] .plat-link:hover{color:#c8ff47!important}
+.card::after,.service-card::after,.machine-card::after,.category-card::after,.panel::after,.social-card::after,.product-card::before,.filter-btn::before,.cat-item::before,.buy-btn::before{transition:transform .46s cubic-bezier(.22,1,.36,1),background .4s!important}
 </style>
 </head>
 <body>
@@ -146,26 +175,19 @@ footer{display:grid;grid-template-columns:auto 1fr auto;align-items:center;paddi
 <nav>
   <a href="index.html" class="nav-logo">re<span class="acc">:</span>pare</a>
   <ul class="nav-center">
-    <li><a href="repare-catalogue.html?filter=lab">RE:Lab</a></li>
-    <li><a href="repare-custom.html">RE:Custom</a></li>
-    <li><a href="repare-catalogue.html?filter=laptop">RE:Laptop</a></li>
-    <li><a href="repare-catalogue.html?filter=keyboard">RE:Keyboard</a></li>
-    <li><a href="repare-catalogue.html?filter=new">RE:New</a></li>
+    <li class="nav-group"><a href="repare-ordinateurs.html">Ordinateurs</a><div class="nav-dropdown"><a href="repare-lab.html"><span class="nav-dd-title">RE:Lab</span><span class="nav-dd-desc">Old is Gold — PC gaming reconditionnés et optimisés.</span></a><a href="repare-new-builds.html"><span class="nav-dd-title">RE:New</span><span class="nav-dd-desc">Configurations neuves montées avec une vraie logique de budget.</span></a><a href="repare-laptops.html"><span class="nav-dd-title">RE:Lap</span><span class="nav-dd-desc">Portables reconditionnés pour le jeu, les études ou le quotidien.</span></a><a href="repare-custom.html"><span class="nav-dd-title">RE:Custom</span><span class="nav-dd-desc">Demande de build sur-mesure selon vos usages.</span></a></div></li>
+    <li class="nav-group"><a href="repare-services.html">Nos services</a><div class="nav-dropdown"><a href="repare-custom.html"><span class="nav-dd-title">RE:Custom</span><span class="nav-dd-desc">Devis et demande de build sur-mesure.</span></a><a href="repare-clear.html"><span class="nav-dd-title">RE:Clear</span><span class="nav-dd-desc">Optimisation Windows 10/11.</span></a><a href="repare-pare.html"><span class="nav-dd-title">RE:Pare</span><span class="nav-dd-desc">Réparation autour de Mulhouse.</span></a></div></li>
+    <li class="nav-group"><a href="repare-claviers.html">Claviers</a><div class="nav-dropdown"><a href="repare-keyboards.html"><span class="nav-dd-title">RE:Keyboard</span><span class="nav-dd-desc">Claviers reconditionnés et moddés.</span></a><a href="repare-mod.html"><span class="nav-dd-title">RE:Mod</span><span class="nav-dd-desc">Article et conseils de moddage.</span></a></div></li>
+    <li class="nav-group"><a href="repare-about.html">À propos</a><div class="nav-dropdown"><a href="repare-blog.html"><span class="nav-dd-title">Blog</span><span class="nav-dd-desc">Guides, coulisses et analyses RE:PARE.</span></a><a href="repare-about.html"><span class="nav-dd-title">À propos</span><span class="nav-dd-desc">La vision et la méthode RE:PARE.</span></a><a href="repare-contact.html"><span class="nav-dd-title">Aide</span><span class="nav-dd-desc">FAQ, contact et accompagnement.</span></a><a href="repare-mentions.html"><span class="nav-dd-title">Mentions légales</span><span class="nav-dd-desc">Cadre légal et informations éditeur.</span></a><a href="repare-contact.html"><span class="nav-dd-title">Contact</span><span class="nav-dd-desc">Parlons de votre besoin.</span></a><a href="repare-reseaux.html"><span class="nav-dd-title">Nos réseaux</span><span class="nav-dd-desc">Retrouvez RE:PARE sur les plateformes sociales.</span></a><a href="repare-ou-acheter.html"><span class="nav-dd-title">Où acheter RE:PARE</span><span class="nav-dd-desc">Tous les revendeurs et le fonctionnement des ventes.</span></a></div></li>
   </ul>
-  <div class="nav-right">
-    <div class="theme-toggle" onclick="toggleTheme()">
-      <span class="tgl-label" id="tgl-lbl">Nuit</span>
-      <div class="tgl-track"><div class="tgl-thumb"></div></div>
-    </div>
-    <a href="repare-catalogue.html?filter=laptop" class="nav-cta">Voir les portables &rarr;</a>
-  </div>
+  <div class="nav-right"><div class="theme-toggle" onclick="toggleTheme()"><span class="tgl-label" id="tgl-lbl">Nuit</span><div class="tgl-track"><div class="tgl-thumb"></div></div></div><a href="repare-catalogue.html" class="nav-cta">Tous nos produits &rarr;</a></div>
 </nav>
 <main>
 <div class="page-container">
   <div class="breadcrumb">
     <a href="index.html">Accueil</a>
     <span>/</span>
-    <a href="repare-catalogue.html?filter=laptop">RE:Laptop</a>
+    <a href="repare-laptops.html">RE:Laptop</a>
     <span>/</span>
     <span>ThinkPad T14 Gen 2</span>
   </div>
@@ -300,6 +322,7 @@ footer{display:grid;grid-template-columns:auto 1fr auto;align-items:center;paddi
     <li><a href="repare-blog.html">Blog</a></li>
     <li><a href="repare-about.html">À propos</a></li>
     <li><a href="repare-contact.html">Aide</a></li>
+    <li><a href="repare-reseaux.html">Nos réseaux</a></li>
     <li><a href="repare-mentions.html">Mentions légales</a></li>
     <li><a href="repare-contact.html">Contact</a></li>
   </ul>
@@ -312,7 +335,7 @@ const canvas=document.getElementById("bg-canvas");
 const ctx=canvas.getContext("2d");
 let rects=[],raf;
 function initRects(){rects=[];const w=canvas.width,h=canvas.height;for(let i=0;i<28;i++){const s=30+Math.random()*140;rects.push({x:Math.random()*w,y:Math.random()*h,w:s,h:s*(0.35+Math.random()*0.85),vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.15,a:0.05+Math.random()*0.1,rot:Math.random()*Math.PI*2,vr:(Math.random()-.5)*.003})}}
-function drawBg(){const w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);const dark=isDark();rects.forEach(r=>{ctx.save();ctx.translate(r.x,r.y);ctx.rotate(r.rot);ctx.globalAlpha=dark?r.a*2.4:r.a*3.2;ctx.strokeStyle=dark?"#c8ff47":"#4a4a45";ctx.lineWidth=dark?.8:1;ctx.strokeRect(-r.w/2,-r.h/2,r.w,r.h);ctx.restore();r.x+=r.vx;r.y+=r.vy;r.rot+=r.vr;if(r.x<-160)r.x=w+100;if(r.x>w+160)r.x=-100;if(r.y<-160)r.y=h+100;if(r.y>h+160)r.y=-100});raf=requestAnimationFrame(drawBg)}
+function drawBg(){const w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);const dark=isDark();rects.forEach(r=>{ctx.save();ctx.translate(r.x,r.y);ctx.rotate(r.rot);ctx.globalAlpha=dark?r.a*2.4:r.a*3.2;ctx.strokeStyle=dark?"#c8ff47":"#4a4a45";ctx.lineWidth=dark ? 0.8 : 1;ctx.strokeRect(-r.w/2,-r.h/2,r.w,r.h);ctx.restore();r.x+=r.vx;r.y+=r.vy;r.rot+=r.vr;if(r.x<-160)r.x=w+100;if(r.x>w+160)r.x=-100;if(r.y<-160)r.y=h+100;if(r.y>h+160)r.y=-100});raf=requestAnimationFrame(drawBg)}
 function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;initRects()}
 function setTheme(theme){const html=document.documentElement;html.setAttribute("data-theme",theme);const label=document.getElementById("tgl-lbl");if(label) label.textContent = theme==="dark" ? "Jour" : "Nuit";localStorage.setItem("repareTheme", theme)}
 function initTheme(){const savedTheme = localStorage.getItem("repareTheme");setTheme(savedTheme || "dark")}
@@ -328,3 +351,8 @@ if(galleryMain){galleryMain.addEventListener("wheel",(e)=>{e.preventDefault();go
 </script>
 </body>
 </html>
+
+
+
+
+
