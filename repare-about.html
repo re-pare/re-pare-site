@@ -255,15 +255,13 @@ footer{display:grid;grid-template-columns:auto 1fr auto;align-items:center;paddi
 html{height:100%}
 body{min-height:100vh;display:flex;flex-direction:column}
 main{flex:1 0 auto;width:100%}
-.platforms{background:var(--bg-2)!important;position:relative;z-index:2}
+.platforms{background:var(--bg)!important;position:relative;z-index:2}
 footer{background:var(--bg)!important;position:relative;z-index:2}
 .nav-dropdown{top:100%!important;transform:translateY(0)!important}
 .nav-group:hover .nav-dropdown,.nav-group:focus-within .nav-dropdown{opacity:1;visibility:visible;pointer-events:auto}
 /* shared uniform polish */
 nav + .breadcrumb{margin-top:54px}
 nav + .breadcrumb + main{padding-top:0!important}
-main:has(.breadcrumb){padding-top:0!important}
-main > .page-container:has(.breadcrumb),main > .wrap:has(.breadcrumb),main > .page-shell:has(.breadcrumb),main > .page:has(.breadcrumb){padding-top:0!important}
 @media(max-width:600px){nav + .breadcrumb{margin-top:50px}}
 .plat-link,.plat-link:hover{border-bottom:none!important}
 .plat-link::after,.plat-link:hover::after{display:none!important;transform:none!important}

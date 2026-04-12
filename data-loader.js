@@ -118,19 +118,41 @@ class DataLoader {
    * Load products from content/products/[category] folders
    */
   async loadProducts() {
+    const fallbackFiles = {
+      lab: ['service-diagnostic-pc.md'],
+      laptop: [],
+      keyboard: ['keychron-k8-brown.md'],
+      new: ['macbook-air-m1.md'],
+      product: ['rtx-3070-gaming-pc.md'],
+      custom: []
+    };
+
     try {
       for (const category of Object.keys(this.products)) {
+        this.products[category] = [];
+
         const response = await fetch(`/content/products/${category}/`);
-        const html = await response.text();
-        const files = this.parseFileList(html);
+        const html = response.ok ? await response.text() : '';
+        const files = [...new Set([
+          ...this.parseFileList(html),
+          ...(fallbackFiles[category] || [])
+        ])];
 
         for (const file of files.filter(f => f.endsWith('.md'))) {
-          const productResponse = await fetch(`/content/products/${category}/${file}`);
-          const productContent = await productResponse.text();
-          const { frontmatter, body } = this.parseFrontMatter(productContent);
+          try {
+            const productResponse = await fetch(`/content/products/${category}/${file}`);
+            if (!productResponse.ok) continue;
 
-          frontmatter.body = body;
-          this.products[category].push(frontmatter);
+            const productContent = await productResponse.text();
+            const { frontmatter, body } = this.parseFrontMatter(productContent);
+            if (!frontmatter.title && !frontmatter.slug) continue;
+
+            frontmatter.body = body;
+            if (!frontmatter.category) frontmatter.category = category;
+            this.products[category].push(frontmatter);
+          } catch (productError) {
+            console.warn(`Could not load product ${category}/${file}:`, productError);
+          }
         }
       }
     } catch (error) {
